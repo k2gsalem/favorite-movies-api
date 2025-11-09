@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum EntryType {
+  MOVIE
+  TV_SHOW
+}
+
+model Entry {
+  id        Int       @id @default(autoincrement())
+  title     String
+  type      EntryType
+  director  String
+  budget    Int
+  location  String
+  duration  Int
+  yearOrTime String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}

@@ -1,0 +1,37 @@
+{
+  "name": "favorite-movies-api",
+  "version": "1.0.0",
+  "description": "RESTful API for managing favorite movies and TV shows",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "test": "cross-env NODE_ENV=test DATABASE_URL=\"file:./test.db\" jest --runInBand"
+  },
+  "keywords": [
+    "movies",
+    "tv",
+    "express",
+    "prisma"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "jest": "^30.2.0",
+    "prisma": "^6.19.0",
+    "supertest": "^7.1.4"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  }
+}
