@@ -7,3 +7,5 @@ Dockerfile
 .git
 .gitignore
 plan
+test.db
+test.db-journal

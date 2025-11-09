@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:20-alpine
+FROM node:20-alpine AS base
 
 # Install openssl for Prisma
 RUN apk add --no-cache openssl
@@ -10,13 +10,27 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-# Copy application code
+# Copy Prisma schema and migrations and generate client
 COPY prisma ./prisma
+RUN npx prisma generate
+
+FROM base AS test
+
+# Copy source and test files for running the test suite
 COPY src ./src
+COPY tests ./tests
+COPY jest.config.js ./
 COPY .env.example ./
 
-# Generate Prisma client
-RUN npx prisma generate
+# Run the API test suite against a SQLite database to validate the build
+ENV DATABASE_URL="file:./test.db"
+RUN npm test
+
+FROM base AS production
+
+# Copy application source code and example environment file
+COPY src ./src
+COPY .env.example ./
 
 EXPOSE 3000
 

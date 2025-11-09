@@ -69,10 +69,16 @@ The API listens on the port defined in `.env` (defaults to `3000`).
 
 ### Running with Docker
 
-Build the image:
+Build the image (this automatically runs the Jest suite in an intermediate stage to ensure the container is healthy):
 
 ```bash
 docker build -t favorite-movies-api .
+```
+
+You can also run just the test stage if you want to validate the image without producing the final runtime layer:
+
+```bash
+docker build --target test .
 ```
 
 Run the container locally (maps port `3000` by default):
