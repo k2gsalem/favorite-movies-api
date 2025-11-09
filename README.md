@@ -67,6 +67,28 @@ npm start
 
 The API listens on the port defined in `.env` (defaults to `3000`).
 
+### Running with Docker
+
+Build the image (this automatically runs the Jest suite in an intermediate stage to ensure the container is healthy):
+
+```bash
+docker build -t favorite-movies-api .
+```
+
+You can also run just the test stage if you want to validate the image without producing the final runtime layer:
+
+```bash
+docker build --target test .
+```
+
+Run the container locally (maps port `3000` by default):
+
+```bash
+docker run --rm -p 3000:3000 favorite-movies-api
+```
+
+The container runs database migrations and seeds the SQLite database on startup. To persist the database between restarts, mount a volume for `/app/dev.db` or provide a different `DATABASE_URL` via environment variables.
+
 ### API Endpoints
 
 | Method | Endpoint                | Description                              |
